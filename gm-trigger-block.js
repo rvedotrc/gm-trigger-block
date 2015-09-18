@@ -33,10 +33,18 @@ try {
   };
 
   var hasWord = function(word) {
+    // FIXME?: word boundary matching.  e.g. "John" should not match "Johnson"
+
+    // FIXME? Currently matches on invisible content, e.g. hidden things, URLs
+
+    // FIXME? Only runs once the page finishes loading
+
+    // FIXME: quoting doesn't work.  e.g. "O'Hara"
     // Xpath quoting
     var xpathWord = "'" + escapeHtml(word.toLowerCase()) + "'";
     console.log(xpathWord);
 
+    // FIXME: lower-casing only works for A-Z
     // text somewhere outside of form
     if (document.evaluate("//*[contains(translate(text(), 'ABCDEFGHJIKLMNOPQRSTUVWXYZ', 'abcdefghjiklmnopqrstuvwxyz'), "+xpathWord+")]", document, null, XPathResult.BOOLEAN_TYPE, null).booleanValue) {
         return true;
@@ -50,7 +58,7 @@ try {
     return false;
   };
 
-  var words = [ "List", "of", "BARD", "Words" ];
+  var words = [ "Bono" ];
   if (words.some(hasWord)) {
        censor();
        //break;
