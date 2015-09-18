@@ -34,23 +34,23 @@ try {
 
   var hasWord = function(word) {
     // Xpath quoting
-    var xpathWord = "'" + escapeHtml(word) + "'";
+    var xpathWord = "'" + escapeHtml(word.toLowerCase()) + "'";
     console.log(xpathWord);
 
     // text somewhere outside of form
-    if (document.evaluate("//*[contains(text(), "+xpathWord+")]", document, null, XPathResult.BOOLEAN_TYPE, null).booleanValue) {
+    if (document.evaluate("//*[contains(translate(text(), 'ABCDEFGHJIKLMNOPQRSTUVWXYZ', 'abcdefghjiklmnopqrstuvwxyz'), "+xpathWord+")]", document, null, XPathResult.BOOLEAN_TYPE, null).booleanValue) {
         return true;
     }
 
     // form input
-    if (document.evaluate("//input[@value = "+xpathWord+"]", document, null, XPathResult.BOOLEAN_TYPE, null).booleanValue) {
+    if (document.evaluate("//input[translate(@value, 'ABCDEFGHJIKLMNOPQRSTUVWXYZ', 'abcdefghjiklmnopqrstuvwxyz') = "+xpathWord+"]", document, null, XPathResult.BOOLEAN_TYPE, null).booleanValue) {
         return true;
     }
 
     return false;
   };
 
-  var words = [ "List", "of", "Bard", "Words" ];
+  var words = [ "List", "of", "BARD", "Words" ];
   if (words.some(hasWord)) {
        censor();
        //break;
