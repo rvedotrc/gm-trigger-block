@@ -23,26 +23,35 @@ try {
     document.body.insertBefore(bigBox, document.body.firstChild);
   };
 
+  var escapeHtml = function(text) {
+    return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  };
+
   var hasWord = function(word) {
-    // Xpath - double up the quote
-    var xpathWord = "'" + word.replace(/'/g, "''") + "'";
+    // Xpath quoting
+    var xpathWord = "'" + escapeHtml(word) + "'";
+    console.log(xpathWord);
 
     // text somewhere outside of form
-    if (document.evaluate("//*[contains(text(), "+word+")]", document, null, XPathResult.BOOLEAN_TYPE, null).booleanValue) {
+    if (document.evaluate("//*[contains(text(), "+xpathWord+")]", document, null, XPathResult.BOOLEAN_TYPE, null).booleanValue) {
         return true;
     }
 
     // form input
-    if (document.evaluate("//input[@value = "+word+"]", document, null, XPathResult.BOOLEAN_TYPE, null).booleanValue) {
+    if (document.evaluate("//input[@value = "+xpathWord+"]", document, null, XPathResult.BOOLEAN_TYPE, null).booleanValue) {
         return true;
     }
 
     return false;
   };
 
-  var word = "can't";
-
-  if (hasWord(word)) {
+  var words = [ "List", "of", "Bard", "Words" ];
+  if (words.some(hasWord)) {
        censor();
        //break;
     }
