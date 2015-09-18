@@ -14,8 +14,9 @@ try {
 
   var censor = function() {
     bigBox = document.createElement("div");
-    bigBox.setAttribute("style", "border: 10px solid red; top: 1em; bottom: 1em; left: 1em; right: 1em; position: absolute; background: grey; z-index:999; text-align: center");
+    bigBox.setAttribute("style", "border: 10px solid red; top: 1em; bottom: 1em; left: 1em; right: 1em; position: absolute; background: grey; z-index:999; text-align: center; opacity: 0.97");
     var button = document.createElement("button");
+    button.setAttribute("style", "margin-top: 2em; font-size: 150%; opacity: 1.0");
     bigBox.appendChild(button);
     var t = document.createTextNode("Warning: trigger content found.  Click to reveal.");
     button.appendChild(t);
